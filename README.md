@@ -8,7 +8,7 @@ Logging into AppInsights/File using Serilog
 >
 > - 2 ways to configure serilog either with json file or fluent api
 >
-> - 1 telemetry initializer to add extra information about ip address
+> - 1 telemetry initializer to add extra information about for example ip address
 >
 > - 1 exception filter attribute in order to handle some business exception as bad requests
 
