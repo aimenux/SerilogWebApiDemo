@@ -12,4 +12,4 @@ Logging into AppInsights/File using Serilog
 >
 > - 1 exception filter attribute in order to handle some business exception as bad requests
 
-**`Tools`** : vs19, net core 3.1, nlog 4.9, serilog 3.2
+**`Tools`** : vs19, net core 3.1, serilog 3.2
