@@ -6,10 +6,12 @@ Logging into AppInsights/File using Serilog
 
 > In this demo, i m using :
 >
-> - 2 ways to configure serilog either with json file or fluent api
+> - 2 configuration ways : code config based or json config based (one way is enabled at the same time) 
 >
-> - 1 telemetry initializer to add extra information about for example ip address
+> - 1 exception filter attribute in order to handle some specific domain exceptions as 400 bad requests
 >
-> - 1 exception filter attribute in order to handle some business exception as bad requests
+> - 4 telemetry processors to filter telemetries or to modify the sampling behaviour
+>
+> - 1 telemetry initializer to add extra information as custom properties
 
 **`Tools`** : vs19, net core 3.1, serilog 3.2

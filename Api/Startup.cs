@@ -1,6 +1,7 @@
 using Api.Filters;
 using Api.Mappers;
 using Api.TelemetryInitializers;
+using Api.TelemetryProcessors;
 using Domain.Ports;
 using Domain.Services;
 using Infrastructure;
@@ -46,6 +47,11 @@ namespace Api
             services.AddSingleton<IAuthorRepository, AuthorRepository>();
             services.AddSingleton<IArticleRepository, ArticleRepository>();
 
+            services.AddApplicationInsightsTelemetryProcessor<SqlDependencyFilteringTelemetryProcessor>();
+            services.AddApplicationInsightsTelemetryProcessor<SlowDependencySamplingTelemetryProcessor>();
+            services.AddApplicationInsightsTelemetryProcessor<FastDependencyFilteringTelemetryProcessor>();
+            services.AddApplicationInsightsTelemetryProcessor<FailedAuthenticationRequestTelemetryProcessor>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(ApiVersion, new OpenApiInfo { Title = ApiName, Version = ApiVersion });
@@ -68,6 +74,7 @@ namespace Api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
+                c.DisplayRequestDuration();
                 c.SwaggerEndpoint($"/swagger/{ApiVersion}/swagger.json", ApiName);
             });
 
