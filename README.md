@@ -1,4 +1,4 @@
-[![.NET 5.0](https://github.com/aimenux/SerilogWebApiDemo/actions/workflows/ci.yml/badge.svg)](https://github.com/aimenux/SerilogWebApiDemo/actions/workflows/ci.yml)
+[![.NET](https://github.com/aimenux/SerilogWebApiDemo/actions/workflows/ci.yml/badge.svg)](https://github.com/aimenux/SerilogWebApiDemo/actions/workflows/ci.yml)
 
 # SerilogWebApiDemo
 ```
