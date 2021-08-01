@@ -35,6 +35,7 @@ namespace Api.Extensions
         {
             return builder.UseSerilog((hostingContext, loggerConfiguration) =>
             {
+                var filePath = hostingContext.Configuration.GetFilePath();
                 var remotePort = hostingContext.Configuration.GetRemotePort();
                 var remoteAddress = hostingContext.Configuration.GetRemoteAddress();
                 var addressFamily = hostingContext.Configuration.GetAddressFamily();
@@ -47,8 +48,9 @@ namespace Api.Extensions
                     .MinimumLevel.Verbose()
                     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                     .Enrich.FromLogContext()
-                    .WriteTo.ApplicationInsights(instrumentationKey, TelemetryConverter.Traces)
                     .WriteTo.Console(outputTemplate: outputTemplate)
+                    .WriteTo.File(filePath, rollingInterval: RollingInterval.Day)
+                    .WriteTo.ApplicationInsights(instrumentationKey, TelemetryConverter.Traces)
                     .WriteTo.Udp(remoteAddress, remotePort, addressFamily, new Log4jTextFormatter());
             });
         }
