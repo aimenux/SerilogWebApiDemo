@@ -1,3 +1,5 @@
+[![.NET 5.0](https://github.com/aimenux/SerilogWebApiDemo/actions/workflows/ci.yml/badge.svg)](https://github.com/aimenux/SerilogWebApiDemo/actions/workflows/ci.yml)
+
 # SerilogWebApiDemo
 ```
 Using Serilog to send logs to multiple sinks
@@ -16,4 +18,4 @@ Using Serilog to send logs to multiple sinks
 > - 4 sinks : console, file, application insights, udp
 >
 
-**`Tools`** : vs19, serilog
+**`Tools`** : vs19, net 5.0, serilog 4.1
