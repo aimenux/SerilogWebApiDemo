@@ -3,33 +3,32 @@ using Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Api.Filters
+namespace Api.Filters;
+
+public sealed class ApiExceptionFilter : ExceptionFilterAttribute
 {
-    public sealed class ApiExceptionFilter : ExceptionFilterAttribute
+    public override void OnException(ExceptionContext context)
     {
-        public override void OnException(ExceptionContext context)
-        {
-            var exception = context?.Exception;
+        var exception = context.Exception;
 
-            if (exception != null && IsBadRequest(exception))
+        if (IsBadRequest(exception))
+        {
+            var errorMessage = exception.Message;
+            var errorName = exception.GetType().Name;
+            var error = new
             {
-                var errorMessage = exception.Message;
-                var errorName = exception.GetType().Name;
-                var error = new
-                {
-                    ErrorName = errorName,
-                    ErrorMessage = errorMessage
-                };
-                context.Result = new BadRequestObjectResult(error);
-                context.ModelState.AddModelError(errorName, errorMessage);
-            }
-
-            base.OnException(context);
+                ErrorName = errorName,
+                ErrorMessage = errorMessage
+            };
+            context.Result = new BadRequestObjectResult(error);
+            context.ModelState.AddModelError(errorName, errorMessage);
         }
 
-        private static bool IsBadRequest(Exception exception)
-        {
-            return exception is BusinessValidationException;
-        }
+        base.OnException(context);
+    }
+
+    private static bool IsBadRequest(Exception exception)
+    {
+        return exception is BusinessValidationException;
     }
 }

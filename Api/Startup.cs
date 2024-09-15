@@ -6,50 +6,49 @@ using Microsoft.Extensions.Hosting;
 using Api.Filters;
 using Serilog;
 
-namespace Api
+namespace Api;
+
+public partial class Startup
 {
-    public partial class Startup
+    private IConfiguration Configuration { get; }
+    
+    public Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
+        Configuration = configuration;
+    }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddControllers(options =>
         {
-            Configuration = configuration;
+            options.Filters.Add(typeof(ApiExceptionFilter));
+        });
+
+        ConfigureSwagger(services);
+
+        ConfigureIoc(services);
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+
+            UseSwagger(app);
         }
 
-        public IConfiguration Configuration { get; }
+        app.UseSerilogRequestLogging();
 
-        public void ConfigureServices(IServiceCollection services)
+        app.UseHttpsRedirection();
+
+        app.UseRouting();
+
+        app.UseAuthorization();
+
+        app.UseEndpoints(endpoints =>
         {
-            services.AddControllers(options =>
-            {
-                options.Filters.Add(typeof(ApiExceptionFilter));
-            });
-
-            ConfigureSwagger(services);
-
-            ConfigureIoc(services);
-        }
-
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-
-                UseSwagger(app);
-            }
-
-            app.UseSerilogRequestLogging();
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
+            endpoints.MapControllers();
+        });
     }
 }

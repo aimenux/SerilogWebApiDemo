@@ -1,8 +1,7 @@
-﻿namespace Domain.Ports
+﻿namespace Domain.Ports;
+
+public interface IAuthorRepository
 {
-    public interface IAuthorRepository
-    {
-        void AddToBlackListAuthors(string author);
-        bool IsBlackListedAuthor(string author);
-    }
+    void AddToBlackListAuthors(string author);
+    bool IsBlackListedAuthor(string author);
 }

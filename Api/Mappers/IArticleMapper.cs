@@ -1,11 +1,10 @@
 ﻿using Api.Payloads;
 using Domain.Models;
 
-namespace Api.Mappers
+namespace Api.Mappers;
+
+public interface IArticleMapper
 {
-    public interface IArticleMapper
-    {
-        Article Map(ArticleDto articleDto);
-        ArticleDto Map(Article articleDto);
-    }
+    Article Map(ArticleDto articleDto);
+    ArticleDto Map(Article articleDto);
 }

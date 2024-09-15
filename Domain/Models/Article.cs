@@ -1,11 +1,10 @@
 ﻿using System;
 
-namespace Domain.Models
+namespace Domain.Models;
+
+public sealed record Article
 {
-    public class Article
-    {
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public DateTime PublicationDate { get; set; }
-    }
+    public string Title { get; init; }
+    public string Author { get; init; }
+    public DateTime PublicationDate { get; init; }
 }

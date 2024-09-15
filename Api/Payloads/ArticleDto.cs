@@ -1,17 +1,16 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Api.Payloads
-{
-    public class ArticleDto
-    {
-        [Required]
-        public string Title { get; set; }
-        
-        [Required]
-        public string Author { get; set; }
+namespace Api.Payloads;
 
-        [Required]
-        public DateTime PublicationDate { get; set; }
-    }
+public sealed record ArticleDto
+{
+    [Required]
+    public string Title { get; init; }
+        
+    [Required]
+    public string Author { get; init; }
+
+    [Required]
+    public DateTime PublicationDate { get; init; }
 }

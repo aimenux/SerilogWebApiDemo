@@ -3,35 +3,34 @@ using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.Extensibility;
 
-namespace Api.TelemetryProcessors
+namespace Api.TelemetryProcessors;
+
+public class FastDependencyFilteringTelemetryProcessor : ITelemetryProcessor
 {
-    public class FastDependencyFilteringTelemetryProcessor : ITelemetryProcessor
+    private readonly ITelemetryProcessor _next;
+
+    public FastDependencyFilteringTelemetryProcessor(ITelemetryProcessor next)
     {
-        private readonly ITelemetryProcessor _next;
+        _next = next;
+    }
 
-        public FastDependencyFilteringTelemetryProcessor(ITelemetryProcessor next)
+    public void Process(ITelemetry item)
+    {
+        if (IsFastDependency(item))
         {
-            _next = next;
+            return; 
         }
 
-        public void Process(ITelemetry item)
-        {
-            if (IsFastDependency(item))
-            {
-                return; 
-            }
+        _next.Process(item);
+    }
 
-            _next.Process(item);
+    private static bool IsFastDependency(ITelemetry item)
+    {
+        if (item is DependencyTelemetry dependencyTelemetry)
+        {
+            return dependencyTelemetry.Duration < TimeSpan.FromMilliseconds(100);
         }
 
-        private static bool IsFastDependency(ITelemetry item)
-        {
-            if (item is DependencyTelemetry dependencyTelemetry)
-            {
-                return dependencyTelemetry.Duration < TimeSpan.FromMilliseconds(100);
-            }
-
-            return false;
-        }
+        return false;
     }
 }

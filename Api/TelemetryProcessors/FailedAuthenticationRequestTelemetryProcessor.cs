@@ -2,35 +2,34 @@
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.Extensibility;
 
-namespace Api.TelemetryProcessors
+namespace Api.TelemetryProcessors;
+
+public class FailedAuthenticationRequestTelemetryProcessor : ITelemetryProcessor
 {
-    public class FailedAuthenticationRequestTelemetryProcessor : ITelemetryProcessor
+    private readonly ITelemetryProcessor _next;
+
+    public FailedAuthenticationRequestTelemetryProcessor(ITelemetryProcessor next)
     {
-        private readonly ITelemetryProcessor _next;
+        _next = next;
+    }
 
-        public FailedAuthenticationRequestTelemetryProcessor(ITelemetryProcessor next)
+    public void Process(ITelemetry item)
+    {
+        if (IsAuthenticationFailed(item))
         {
-            _next = next;
+            return; 
         }
 
-        public void Process(ITelemetry item)
-        {
-            if (IsAuthenticationFailed(item))
-            {
-                return; 
-            }
+        _next.Process(item);
+    }
 
-            _next.Process(item);
+    private static bool IsAuthenticationFailed(ITelemetry item)
+    {
+        if (item is RequestTelemetry requestTelemetry)
+        {
+            return string.Equals(requestTelemetry.ResponseCode, "401");
         }
 
-        private static bool IsAuthenticationFailed(ITelemetry item)
-        {
-            if (item is RequestTelemetry requestTelemetry)
-            {
-                return string.Equals(requestTelemetry.ResponseCode, "401");
-            }
-
-            return false;
-        }
+        return false;
     }
 }

@@ -4,50 +4,43 @@ using Domain.Models;
 using Domain.Ports;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Infrastructure
+namespace Infrastructure;
+
+public class ArticleRepository : IArticleRepository
 {
-    public class ArticleRepository : IArticleRepository
+    private readonly IMemoryCache _cache;
+    private readonly HashSet<string> _keys;
+
+    public ArticleRepository(IMemoryCache cache)
     {
-        private readonly IMemoryCache _cache;
-        private readonly HashSet<string> _keys;
+        _cache = cache;
+        _keys = [];
+    }
 
-        public ArticleRepository(IMemoryCache cache)
+    public bool ArticleExists(Article article)
+    {
+        var key = BuildKey(article);
+        return _cache.TryGetValue(key, out _);
+    }
+
+    public void AddArticle(Article article)
+    {
+        if (ArticleExists(article))
         {
-            _cache = cache;
-            _keys = new HashSet<string>();
+            return;
         }
 
-        public bool ArticleExists(Article article)
-        {
-            var key = BuildKey(article);
-            return _cache.TryGetValue(key, out var _);
-        }
+        var key = BuildKey(article);
+        _keys.Add(key);
+        _cache.Set(key, article);
+    }
 
-        public void AddArticle(Article article)
-        {
-            if (ArticleExists(article))
-            {
-                return;
-            }
+    public ICollection<Article> GetAllArticles() => _keys.Select(GetArticle).ToList();
+    
+    private Article GetArticle(string key) => _cache.TryGetValue(key, out Article article) ? article : null;
 
-            var key = BuildKey(article);
-            _keys.Add(key);
-            _cache.Set(key, article);
-        }
-
-        public ICollection<Article> GetAllArticles()
-        {
-            Article GetArticle(string key)
-            {
-                return _cache.TryGetValue(key, out Article article) ? article : null;
-            }
-
-            return _keys.Select(GetArticle).ToList();
-        }
-
-        private static string BuildKey(Article article)
-        {
-            return $"{article.Author}_{article.Title}".Trim().ToUpper();
-        }
+    private static string BuildKey(Article article)
+    {
+        return $"{article.Author}_{article.Title}".Trim().ToUpper(); 
     }
 }
