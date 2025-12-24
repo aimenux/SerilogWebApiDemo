@@ -1,5 +1,4 @@
 using System.Net.Sockets;
-using Microsoft.Extensions.Configuration;
 
 namespace Api.Extensions;
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Domain.Extensions;
+﻿namespace Domain.Extensions;
 
 public static class StringExtensions
 {

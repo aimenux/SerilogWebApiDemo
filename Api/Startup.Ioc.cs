@@ -6,7 +6,6 @@ using Domain.Ports;
 using Domain.Services;
 using Infrastructure;
 using Microsoft.ApplicationInsights.Extensibility;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Api;
 

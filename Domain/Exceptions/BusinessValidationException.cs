@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-
-namespace Domain.Exceptions;
+﻿namespace Domain.Exceptions;
 
 public class BusinessValidationException : BusinessException
 {

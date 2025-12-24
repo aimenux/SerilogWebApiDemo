@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Api.Mappers;
+﻿using Api.Mappers;
 using Api.Payloads;
 using Domain.Ports;
 using Microsoft.AspNetCore.Mvc;

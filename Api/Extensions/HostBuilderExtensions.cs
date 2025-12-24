@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.Hosting;
-using Serilog;
+﻿using Serilog;
 using Serilog.Debugging;
 using Serilog.Events;
 using Serilog.Sinks.Udp.TextFormatters;
