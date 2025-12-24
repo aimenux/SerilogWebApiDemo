@@ -18,4 +18,4 @@ Using Serilog to send logs to multiple sinks
 > - 4 sinks : console, file, application insights, udp
 >
 
-**`Tools`** : net 8.0, serilog
+**`Tools`** : net 10.0, serilog
