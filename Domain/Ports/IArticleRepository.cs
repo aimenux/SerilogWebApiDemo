@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Domain.Models;
 
 namespace Domain.Ports;
@@ -6,6 +9,10 @@ namespace Domain.Ports;
 public interface IArticleRepository
 {
     bool ArticleExists(Article article);
-    void AddArticle(Article article);
-    ICollection<Article> GetAllArticles();
+    
+    Task AddArticleAsync(Article article, CancellationToken cancellationToken);
+    
+    Task<ICollection<Article>> GetArticlesAsync(CancellationToken cancellationToken) => GetArticlesAsync(null, cancellationToken);
+    
+    Task<ICollection<Article>> GetArticlesAsync(Predicate<Article> filter, CancellationToken cancellationToken);
 }

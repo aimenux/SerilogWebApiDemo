@@ -3,7 +3,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace Infrastructure;
 
-public class AuthorRepository : IAuthorRepository
+public sealed class AuthorRepository : IAuthorRepository
 {
     private readonly IMemoryCache _cache;
 

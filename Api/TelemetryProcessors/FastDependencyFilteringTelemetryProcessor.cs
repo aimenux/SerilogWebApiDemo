@@ -5,7 +5,7 @@ using Microsoft.ApplicationInsights.Extensibility;
 
 namespace Api.TelemetryProcessors;
 
-public class FastDependencyFilteringTelemetryProcessor : ITelemetryProcessor
+public sealed class FastDependencyFilteringTelemetryProcessor : ITelemetryProcessor
 {
     private readonly ITelemetryProcessor _next;
 
@@ -18,7 +18,7 @@ public class FastDependencyFilteringTelemetryProcessor : ITelemetryProcessor
     {
         if (IsFastDependency(item))
         {
-            return; 
+            return;
         }
 
         _next.Process(item);

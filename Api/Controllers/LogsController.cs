@@ -4,12 +4,12 @@ using Microsoft.Extensions.Logging;
 namespace Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
-public class LoggerController : ControllerBase
+[Route("api/[controller]")]
+public class LogsController : ControllerBase
 {
-    private readonly ILogger<LoggerController> _logger;
+    private readonly ILogger<LogsController> _logger;
 
-    public LoggerController(ILogger<LoggerController> logger)
+    public LogsController(ILogger<LogsController> logger)
     {
         _logger = logger;
     }

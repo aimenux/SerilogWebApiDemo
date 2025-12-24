@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace Api;
 
@@ -8,7 +8,7 @@ public partial class Startup
 {
     private const string CurrentVersion = "v1";
     private const string ApiName = "SerilogWebApiDemo";
-    private static readonly string Url = $"{CurrentVersion}/swagger.json";
+    private const string Url = $"{CurrentVersion}/swagger.json";
     private static readonly OpenApiInfo Info = new() { Title = ApiName, Version = CurrentVersion };
 
     private static void ConfigureSwagger(IServiceCollection services)

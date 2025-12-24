@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Domain.Exceptions;
+using Domain.Extensions;
 using Domain.Models;
 using Domain.Ports;
 
@@ -18,11 +20,11 @@ public class ArticleService : IArticleService
         _authorRepository = authorRepository;
     }
 
-    public void AddArticle(Article article)
+    public Task AddArticleAsync(Article article, CancellationToken cancellationToken)
     {
         if (article == null)
         {
-            return;
+            return Task.CompletedTask;
         }
 
         var customProperties = new Dictionary<string, object>
@@ -42,16 +44,21 @@ public class ArticleService : IArticleService
             throw BusinessException.ArticleExists(article.Title, customProperties);
         }
 
-        _articleRepository.AddArticle(article);
+        return _articleRepository.AddArticleAsync(article, cancellationToken);
+    }
+    
+    public Task<ICollection<Article>> GetArticlesAsync(CancellationToken cancellationToken)
+    {
+        return _articleRepository.GetArticlesAsync(cancellationToken);
     }
 
-    public ICollection<Article> GetArticlesForAuthor(string author)
+    public Task<ICollection<Article>> GetArticlesForAuthorAsync(string author, CancellationToken cancellationToken)
     {
-        return _articleRepository.GetAllArticles().Where(article => string.Equals(article.Author, author, StringComparison.OrdinalIgnoreCase)).ToList();
+        return _articleRepository.GetArticlesAsync(x => x.Author.EqualsIgnoreCase(author), cancellationToken);
     }
 
-    public ICollection<Article> GetArticlesPublishedAfterDate(DateTime publicationDate)
+    public Task<ICollection<Article>> GetArticlesPublishedAfterDateAsync(DateTime publicationDate, CancellationToken cancellationToken)
     {
-        return _articleRepository.GetAllArticles().Where(article => article.PublicationDate >= publicationDate).ToList();
+        return _articleRepository.GetArticlesAsync(x => x.PublicationDate >= publicationDate, cancellationToken);
     }
 }

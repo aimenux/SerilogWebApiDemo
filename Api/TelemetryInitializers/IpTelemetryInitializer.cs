@@ -7,7 +7,7 @@ using Microsoft.ApplicationInsights.Extensibility;
 
 namespace Api.TelemetryInitializers;
 
-public class IpTelemetryInitializer : ITelemetryInitializer
+public sealed class IpTelemetryInitializer : ITelemetryInitializer
 {
     private const string IpKey = "IpAddress";
 

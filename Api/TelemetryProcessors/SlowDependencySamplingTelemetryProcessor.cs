@@ -5,7 +5,7 @@ using Microsoft.ApplicationInsights.Extensibility;
 
 namespace Api.TelemetryProcessors;
 
-public class SlowDependencySamplingTelemetryProcessor : ITelemetryProcessor
+public sealed class SlowDependencySamplingTelemetryProcessor : ITelemetryProcessor
 {
     private readonly ITelemetryProcessor _next;
 

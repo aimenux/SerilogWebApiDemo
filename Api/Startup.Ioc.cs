@@ -18,10 +18,10 @@ public partial class Startup
 
         AddApplicationInsightsTelemetry(services);
 
-        services.AddSingleton<IArticleMapper, ArticleMapper>();
-        services.AddSingleton<IArticleService, ArticleService>();
-        services.AddSingleton<IAuthorRepository, AuthorRepository>();
-        services.AddSingleton<IArticleRepository, ArticleRepository>();
+        services.AddScoped<IArticleMapper, ArticleMapper>();
+        services.AddScoped<IArticleService, ArticleService>();
+        services.AddScoped<IAuthorRepository, AuthorRepository>();
+        services.AddScoped<IArticleRepository, ArticleRepository>();
     }
 
     private void AddApplicationInsightsTelemetry(IServiceCollection services)

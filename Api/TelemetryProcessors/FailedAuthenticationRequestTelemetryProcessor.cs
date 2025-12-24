@@ -4,7 +4,7 @@ using Microsoft.ApplicationInsights.Extensibility;
 
 namespace Api.TelemetryProcessors;
 
-public class FailedAuthenticationRequestTelemetryProcessor : ITelemetryProcessor
+public sealed class FailedAuthenticationRequestTelemetryProcessor : ITelemetryProcessor
 {
     private readonly ITelemetryProcessor _next;
 
@@ -17,7 +17,7 @@ public class FailedAuthenticationRequestTelemetryProcessor : ITelemetryProcessor
     {
         if (IsAuthenticationFailed(item))
         {
-            return; 
+            return;
         }
 
         _next.Process(item);

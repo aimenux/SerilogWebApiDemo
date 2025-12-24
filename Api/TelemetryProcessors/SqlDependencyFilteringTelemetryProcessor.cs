@@ -5,7 +5,7 @@ using Microsoft.ApplicationInsights.Extensibility;
 
 namespace Api.TelemetryProcessors;
 
-public class SqlDependencyFilteringTelemetryProcessor : ITelemetryProcessor
+public sealed class SqlDependencyFilteringTelemetryProcessor : ITelemetryProcessor
 {
     private readonly ITelemetryProcessor _next;
 
